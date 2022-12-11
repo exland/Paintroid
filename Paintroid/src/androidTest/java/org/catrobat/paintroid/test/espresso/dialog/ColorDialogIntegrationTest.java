@@ -970,6 +970,8 @@ public class ColorDialogIntegrationTest {
 		}
 
 		saveCatrobatImage();
+		// Here  I think to click overrride ?
+		onView(withText(R.string.overwrite_button_text)).perform(click()); // here i think needed
 		Uri uri = activity.model.getSavedPictureUri();
 		launchActivityRule.finishActivity();
 
