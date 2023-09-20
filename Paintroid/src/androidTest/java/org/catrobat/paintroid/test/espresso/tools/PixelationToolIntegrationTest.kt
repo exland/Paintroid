@@ -109,7 +109,7 @@ class PixelationToolIntegrationTest {
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
         drawable.draw(canvas)
-        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.boxHeight.toInt())
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(),pixelTool.numPixelHeight.toInt())
         var test =  algoUnderTest.getMean(bitmap)
         val Results = Triple(130,130,130)
         assertEquals(test, Results)
@@ -127,7 +127,7 @@ class PixelationToolIntegrationTest {
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
         drawable.draw(canvas)
-        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.boxHeight.toInt())
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(),pixelTool.numPixelHeight.toInt())
         var meanCollor =  algoUnderTest.getMean(bitmap)
         val Results = Triple(213,218,225)
        assertEquals(meanCollor, Results)
@@ -141,7 +141,7 @@ class PixelationToolIntegrationTest {
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
         drawable.draw(canvas)
-        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.boxHeight.toInt())
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
         val meanCollor =  algoUnderTest.getMean(bitmap)
         val Results = Triple(230,196,197)
         assertEquals(meanCollor, Results)
@@ -155,7 +155,7 @@ class PixelationToolIntegrationTest {
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
         drawable.draw(canvas)
-        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.boxHeight.toInt())
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
         val meanCollor =  algoUnderTest.getMean(bitmap)
         val Results = Triple(128,127,132)
         assertEquals(meanCollor, Results)
@@ -169,7 +169,7 @@ class PixelationToolIntegrationTest {
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
         drawable.draw(canvas)
-        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.boxHeight.toInt())
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(),pixelTool.numPixelHeight.toInt())
         val meanCollor =  algoUnderTest.getMean(bitmap)
         val Results = Triple(132,115,95)
         assertEquals(meanCollor, Results)
@@ -183,9 +183,24 @@ class PixelationToolIntegrationTest {
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
         drawable.draw(canvas)
-        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.boxHeight.toInt())
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(),pixelTool.numPixelHeight.toInt())
         val meanCollor =  algoUnderTest.getMean(bitmap)
         val Results = Triple(129,110,100)
         assertEquals(meanCollor, Results)
+    }
+
+    @Test
+    fun innitSLICTest()
+    {
+
+        var appContext =   InstrumentationRegistry.getInstrumentation().getTargetContext();
+        var drawable  = appContext.getResources().getDrawable(R.drawable.randomp2, null);
+        val bitmap = Bitmap.createBitmap( pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt(), ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
+        drawable.draw(canvas)
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
+        val  result =  algoUnderTest.innitSLIC(bitmap)
+        val Results = Triple(129,110,100)
     }
 }

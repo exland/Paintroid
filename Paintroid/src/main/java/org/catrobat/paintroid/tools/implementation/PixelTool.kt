@@ -78,8 +78,8 @@ class PixelTool(
     // is the checkmark to run the programm
     override fun onClickOnButton() {
         // test if the  ui works good then shoudl be enought for the 30.8
-        algorithm = PixelPixelAlgorithm(drawingBitmap, numCollors.toInt(), numPixelWidth.toInt(), numPixelHeight.toInt() )
-        drawingBitmap = algorithm.getOuput()?.copy(algorithm.outputImg?.config, true)
+        algorithm = PixelPixelAlgorithm(drawingBitmap!!, numCollors.toInt(), numPixelWidth.toInt(), numPixelHeight.toInt() )
+        drawingBitmap = algorithm.getOuput().copy(algorithm.outputImg?.config, true)
     }
 
     override fun resetInternalState() = Unit
