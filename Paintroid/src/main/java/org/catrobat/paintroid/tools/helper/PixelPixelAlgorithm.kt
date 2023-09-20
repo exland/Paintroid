@@ -4,36 +4,35 @@ import android.R.attr
 import android.R.attr.bitmap
 import android.graphics.Bitmap
 import android.graphics.Color
+import androidx.core.graphics.ColorUtils.RGBToLAB
 import kotlin.math.floor
+import kotlin.math.sqrt
 
 
 class PixelPixelAlgorithm(
-    private val inputPix: Bitmap?,
+    private val inputPix: Bitmap,
     private val color: Int,
     private val width: Int,
     private val height: Int,
 ) {
 
-
+    val superPixelArray  =  Array(width) { x ->
+        Array(height) { y ->
+            // Just as an example, initialize with (x, y) coordinates and some default l, a, b values.
+            SuperPixel(x, y, doubleArrayOf(-10.0, -10.0, -10.0))
+        }
+    }
     var inputImg =  inputPix
 
-    var outputImg : Bitmap? = inputImg?.copy(inputImg?.config, true)
+    var outputImg : Bitmap = inputImg.copy(inputImg.config, true)
     val iterations : Int =  130
+    val N = inputImg.width * inputImg.height
+    val K =  width * height
+    val pixelsize : Double =  (N/K).toDouble()
+    val superpixelInterval : Double  = sqrt(pixelsize)
+    val superPixelheight =  inputImg.height / height
+    val superPixelwidth =  inputImg.width / width
 
-    init {
-
-     /*   for (y in 0 until inputImg!!.height)
-        {
-            for(x in 0 until inputImg!!.width / 2){
-                //outputImg?.setPixel(x,y, Color.GREEN)
-            }
-        }*/
-     }
-
-    fun run()
-    {
-
-    }
 
     fun getMean(input :Bitmap): Triple<Int, Int, Int> {
         var Red :Int = 0
@@ -54,8 +53,39 @@ class PixelPixelAlgorithm(
 
 
     }
-    fun getOuput(): Bitmap? {
+    fun getOuput(): Bitmap {
 
         return outputImg
     }
+
+    fun innitSLIC(bitmap : Bitmap): Array<Array<SuperPixel>> {
+        var xpos = (superPixelwidth/2)
+        var ypos =  (superPixelheight / 2 )
+        for (x  in 0  until width ) {
+            for(y in 0 until height) {
+                val c: Int = bitmap.getPixel(xpos,ypos)
+                val Red = Color.red(c)
+                val  Green = Color.green(c)
+                val Blue :Int = Color.blue(c)
+                val lab = doubleArrayOf(0.0,0.0,0.0)
+                RGBToLAB(Red,Green,Blue, lab)
+                superPixelArray[x][y] = SuperPixel(xpos, ypos, lab)
+                ypos += superPixelheight
+            }
+            ypos = 0
+            xpos += superPixelwidth
+        }
+        return superPixelArray
+
+    }
+
+    fun assignPixelsSLIC()
+    {
+
+    }
+    fun SLIC(bitmap : Bitmap)
+    {
+
+    }
+
 }
