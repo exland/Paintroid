@@ -26,6 +26,7 @@ import org.catrobat.paintroid.test.utils.ScreenshotOnFailRule
 import org.catrobat.paintroid.tools.ToolReference
 import org.catrobat.paintroid.tools.ToolType
 import org.catrobat.paintroid.tools.helper.PixelPixelAlgorithm
+import org.catrobat.paintroid.tools.helper.SupepixelCandidates
 import org.catrobat.paintroid.tools.implementation.MAXIMUM_BITMAP_SIZE_FACTOR
 import org.catrobat.paintroid.tools.implementation.PixelTool
 import org.catrobat.paintroid.ui.Perspective
@@ -203,4 +204,63 @@ class PixelationToolIntegrationTest {
         val  result =  algoUnderTest.innitSLIC(bitmap)
         val Results = Triple(129,110,100)
     }
+
+    @Test
+    fun testOptimisaitonWindow()
+    {
+        var appContext =   InstrumentationRegistry.getInstrumentation().getTargetContext();
+        var drawable  = appContext.getResources().getDrawable(R.drawable.randomp2, null);
+        val bitmap = Bitmap.createBitmap( pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt(), ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
+        drawable.draw(canvas)
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
+        val result =  algoUnderTest.calculatewSuperpixelcandidates(0,0)
+        val module : SupepixelCandidates = SupepixelCandidates(0,2,0,2)
+        assertEquals(result, module)
+    }
+    @Test
+    fun testOptimisationWindowMiddle()
+    {
+        var appContext =   InstrumentationRegistry.getInstrumentation().getTargetContext();
+        var drawable  = appContext.getResources().getDrawable(R.drawable.randomp2, null);
+        val bitmap = Bitmap.createBitmap( pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt(), ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
+        drawable.draw(canvas)
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
+        val result =  algoUnderTest.calculatewSuperpixelcandidates((pixelTool.boxWidth/2).toInt(),(pixelTool.boxHeight/2).toInt())
+        val module : SupepixelCandidates = SupepixelCandidates(18,22,29,32)
+        assertEquals(result, module)
+    }
+
+    @Test
+    fun testOptimisationWindowOuther()
+    {
+        var appContext =   InstrumentationRegistry.getInstrumentation().getTargetContext();
+        var drawable  = appContext.getResources().getDrawable(R.drawable.randomp2, null);
+        val bitmap = Bitmap.createBitmap( pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt(), ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
+        drawable.draw(canvas)
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
+        val result =  algoUnderTest.calculatewSuperpixelcandidates((pixelTool.boxWidth).toInt(),(pixelTool.boxHeight).toInt())
+        val module : SupepixelCandidates = SupepixelCandidates(18,22,29,32)
+        assertEquals(result, module)
+    }
+
+    @Test
+    fun testSLICtime()
+    {
+        var appContext =   InstrumentationRegistry.getInstrumentation().getTargetContext();
+        var drawable  = appContext.getResources().getDrawable(R.drawable.randomp2, null);
+        val bitmap = Bitmap.createBitmap( pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt(), ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
+        drawable.draw(canvas)
+        val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
+        val result =  algoUnderTest.SLIC();
+        val test = 1 ;
+    }
+
 }
