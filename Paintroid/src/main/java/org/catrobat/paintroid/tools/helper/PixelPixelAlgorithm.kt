@@ -1,12 +1,9 @@
 package org.catrobat.paintroid.tools.helper
 
-import android.R.attr
-import android.R.attr.bitmap
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.ColorUtils.RGBToLAB
-import kotlin.math.floor
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -68,7 +65,6 @@ class PixelPixelAlgorithm(
 
     }
     fun getOuput(): Bitmap {
-
         return outputImg
     }
 
@@ -95,15 +91,18 @@ class PixelPixelAlgorithm(
 
     fun calculatewSuperpixelcandidates(x :Int, y : Int): SupepixelCandidates {
         val window =  (2 * superpixelInterval).roundToInt()
-        val xmin =  ((x - window).coerceAtLeast(0)/superPixelwidth.toDouble()).roundToInt()
+        var xmin =  ((x - window).coerceAtLeast(0)/superPixelwidth.toDouble()).roundToInt()
         var xmax =  ((x+ window).coerceAtMost(inputImg.width.toDouble().toInt() - 1 )/superPixelwidth.toDouble()).roundToInt()
         if (xmax >= width){
-            xmax =  width - 1
+            xmax = width - 1
+            xmin = xmax -1
         }
-        val ymin =  ((y - window).coerceAtLeast(0)/superPixelheight.toDouble()).roundToInt()
+        // needs testing with low widht and height maybe artifical blocker
+        var ymin = ((y - window).coerceAtLeast(0)/superPixelheight.toDouble()).roundToInt()
         var ymax = ((y + window).coerceAtMost(inputImg.height.toDouble().toInt() - 1 )/superPixelheight.toDouble()).roundToInt()
         if(ymax >= height){
             ymax = height - 1
+            ymin = ymax - 1
         }
         return SupepixelCandidates(xmin, xmax, ymin, ymax)
     }
@@ -133,7 +132,7 @@ class PixelPixelAlgorithm(
                 for (XSup in candidates.xMin until candidates.xMax) {
                     for (YSup in candidates.yMin until candidates.yMax) {
                        val dist =  distanceCalculation(x,y, lab, superPixelArray[XSup][YSup])
-                        pixelAssigments[x][y].addSuperPixel(dist, Pair(XSup,YSup))
+                        pixelAssigments[x][y].shortestDist(dist, Pair(XSup,YSup))
 
                     }
                 }

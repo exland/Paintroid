@@ -1,8 +1,5 @@
 package org.catrobat.paintroid.tools.helper
 
-import kotlin.math.pow
-import kotlin.math.sqrt
-
 
 class SuperPixel(arg_x: Int, arg_y: Int, lab : DoubleArray)  {
     var x: Int = arg_x
@@ -17,20 +14,15 @@ data class SupepixelCandidates(val xMin : Int, val xMax : Int, val yMin : Int, v
 class DistanceCalculation(argX: Int, argY :Int) {
     private val x: Int = argX
     private val y: Int = argY
-    private val doubleToPairMap = LinkedHashMap<Double, Pair<Int, Int>>()
-    var smallestKey: Double = Double.MAX_VALUE
+    private var doubleToPairMap  = Pair(-1, -1)
+    var smallestDist: Double = Double.MAX_VALUE
 
-    fun addSuperPixel(distance : Double, sup_pix : Pair<Int, Int> ){
-        doubleToPairMap[distance] = sup_pix
-    }
-    fun getShortestDistance(): Double {
-
-        for (entry in doubleToPairMap) {
-            if (entry.key < smallestKey) {
-                smallestKey = entry.key
-            }
+    fun shortestDist(distance : Double, sup_pix : Pair<Int, Int> ){
+        if (smallestDist > distance)
+        {
+            doubleToPairMap = sup_pix
+            smallestDist =  distance
         }
-        return smallestKey
     }
 
 }
