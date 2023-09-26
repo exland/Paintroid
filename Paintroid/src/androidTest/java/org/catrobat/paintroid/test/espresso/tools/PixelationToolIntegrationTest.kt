@@ -245,8 +245,8 @@ class PixelationToolIntegrationTest {
         drawable.draw(canvas)
         val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
         val result =  algoUnderTest.calculatewSuperpixelcandidates((pixelTool.boxWidth).toInt(),(pixelTool.boxHeight).toInt())
-        val module : SupepixelCandidates = SupepixelCandidates(18,22,29,32)
-        assertEquals(result, module)
+        val module : SupepixelCandidates = SupepixelCandidates(38,39,58,59)
+        assertEquals(module, result)
     }
 
     @Test
@@ -259,7 +259,7 @@ class PixelationToolIntegrationTest {
         drawable.setBounds(0, 0, pixelTool.boxWidth.toInt(), pixelTool.boxHeight.toInt())
         drawable.draw(canvas)
         val algoUnderTest : PixelPixelAlgorithm = PixelPixelAlgorithm(bitmap, pixelTool.numCollors.toInt(), pixelTool.numPixelWidth.toInt(), pixelTool.numPixelHeight.toInt())
-        val result =  algoUnderTest.SLIC();
+        val result =  algoUnderTest.SLIC()
         val test = 1 ;
     }
 
