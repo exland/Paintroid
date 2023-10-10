@@ -1,8 +1,10 @@
 package org.catrobat.paintroid.tools.helper
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.annotation.VisibleForTesting
+import androidx.core.graphics.ColorUtils.LABToColor
 import androidx.core.graphics.ColorUtils.RGBToLAB
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -131,8 +133,9 @@ class PixelPixelAlgorithm(
                 RGBToLAB(Red,Green,Blue, lab)
                 for (XSup in candidates.xMin until candidates.xMax) {
                     for (YSup in candidates.yMin until candidates.yMax) {
-                       val dist =  distanceCalculation(x,y, lab, superPixelArray[XSup][YSup])
-                        pixelAssigments[x][y].shortestDist(dist, Pair(XSup,YSup))
+                       val dist = distanceCalculation(x,y, lab, superPixelArray[XSup][YSup])
+                       val rgb = LABToColor(superPixelArray[XSup][YSup].l,superPixelArray[XSup][YSup].a, superPixelArray[XSup][YSup].b)
+                       pixelAssigments[x][y].shortestDist(dist, Pair(XSup,YSup), rgb)
 
                     }
                 }
@@ -144,6 +147,12 @@ class PixelPixelAlgorithm(
     {
         innitSLIC(inputImg)
         assignPixelsSLIC(inputImg)
+        for (x  in 0  until inputPix.width ) {
+            for (y in 0 until inputPix.height) {
+                outputImg.setPixel(x,y,pixelAssigments[x][y].collor )
+            }
+        }
+        // TESTING ONLY
 
     }
 
