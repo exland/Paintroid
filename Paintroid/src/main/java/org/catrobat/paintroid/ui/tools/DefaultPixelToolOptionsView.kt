@@ -1,5 +1,6 @@
 package org.catrobat.paintroid.ui.tools
 
+import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -114,6 +115,7 @@ class DefaultPixelToolOptionsView(rootView: ViewGroup) : PixelationToolOptionsVi
     override fun setPixelPreviewListener(onPixelationPreviewListener: PixelationToolOptionsView.OnPixelationPreviewListener) {
         this.pixelChangedListener = onPixelationPreviewListener
     }
+
 
     abstract class PixelToolNumTextWatcher : TextWatcher {
         protected abstract fun setValue(value: Float)

@@ -2,6 +2,8 @@ package org.catrobat.paintroid.tools.implementation
 
 import android.graphics.Bitmap
 import android.graphics.PointF
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.test.espresso.idling.CountingIdlingResource
 import org.catrobat.paintroid.command.CommandManager
@@ -26,17 +28,18 @@ class PixelTool(
     private val pixelToolOptionsView: PixelationToolOptionsView
     @VisibleForTesting
     @JvmField
-    var numPixelHeight = 0f
+    var numPixelHeight = 40
 
     @VisibleForTesting
     @JvmField
-    var numPixelWidth = 0f
+    var numPixelWidth = 60
 
     @VisibleForTesting
     @JvmField
     var numCollors = 0f
 
     lateinit var algorithm : PixelPixelAlgorithm
+    lateinit var localWorkspace:  Workspace
 
     init {
         boxHeight = workspace.height.toFloat()
@@ -44,15 +47,16 @@ class PixelTool(
         toolPosition.x = boxWidth / 2f
         toolPosition.y = boxHeight / 2f
         this.pixelToolOptionsView = pixelToolOptionsViewParam
+        localWorkspace = workspace
         setBitmap(Bitmap.createBitmap(boxWidth.toInt(), boxHeight.toInt(), Bitmap.Config.ARGB_8888))
         toolOptionsViewController.showDelayed()
         this.pixelToolOptionsView.setPixelPreviewListener(object : PixelationToolOptionsView.OnPixelationPreviewListener {
             override fun setPixelWidth(widthPixels: Float) {
-                    this@PixelTool.numPixelWidth = widthPixels
+                    this@PixelTool.numPixelWidth = widthPixels.toInt()
             }
 
             override fun setPixelHeight(heightPixels: Float) {
-               this@PixelTool.numPixelHeight = heightPixels
+               this@PixelTool.numPixelHeight = heightPixels.toInt()
             }
 
             override fun setNumCollor(collorNum: Float) {
@@ -75,12 +79,14 @@ class PixelTool(
     override fun toolPositionCoordinates(coordinate: PointF): PointF = coordinate
 
     // is the checkmark to run the programm
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onClickOnButton() {
-        // test if the  ui works good then shoudl be enought for the 30.8
-        algorithm = PixelPixelAlgorithm(drawingBitmap!!, numCollors.toInt(), numPixelWidth.toInt(), numPixelHeight.toInt() )
-        algorithm.SLIC()
-        drawingBitmap = algorithm.getOuput().copy(algorithm.outputImg.config, true)
-
+        workspace.width
+        workspace.height
+        algorithm = PixelPixelAlgorithm(boxHeight.toInt(),boxWidth.toInt(), toolPosition.x.toInt(),toolPosition.y.toInt(), numPixelWidth,numPixelHeight) // bug that we have to pass the boxwidth box heigt, touch down poition X and touchDownPosiutionY
+        workspace.bitmapOfCurrentLayer?.let { algorithm.KNearestNeighbour(it) }
+     //   drawingBitmap = algorithm.getOuput().copy(algorithm.outputImg.config, true)
+     //   localWorkspace.bitmapOfCurrentLayer = drawingBitmap
     }
 
     override fun resetInternalState() = Unit

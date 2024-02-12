@@ -228,6 +228,7 @@ class DefaultZoomWindowController
             ToolType.TRANSFORM.name,
             ToolType.IMPORTPNG.name,
             ToolType.SHAPE.name,
+            ToolType.PIXEL.name,
             ToolType.TEXT.name -> Constants.NOT_COMPATIBLE
             ToolType.LINE.name,
             ToolType.CURSOR.name,

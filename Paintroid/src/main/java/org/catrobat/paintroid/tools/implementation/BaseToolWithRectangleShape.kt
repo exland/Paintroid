@@ -164,8 +164,8 @@ abstract class BaseToolWithRectangleShape(
     private var overlayDrawable: Drawable? = null
     private var downTimer: CountDownTimer? = null
     private var resizeAction: ResizeAction
-    private var touchDownPositionX = 0f
-    private var touchDownPositionY = 0f
+    public var touchDownPositionX = 0f
+    public var touchDownPositionY = 0f
 
     init {
         val orientation = contextCallback.orientation
